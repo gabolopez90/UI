@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
@@ -38,9 +39,20 @@ namespace UI.Views
             try
             {
                 clientes = SQLiteDataAccess.CargaCedula(cedu);
-                nombreCliente.Content = clientes[0].nombre;
-                cargoCliente.Content = clientes[0].cargo;
-                nivelCliente.Content = clientes[0].nivel;
+                nombreCliente.Text = clientes[0].nombre;
+                cargoCliente.Text = clientes[0].cargo;
+                nivelCliente.Text = clientes[0].nivel.ToString();
+                fechaIngCliente.Text = clientes[0].fechadeingreso;
+                observacion.Text = clientes[0].consolidado_descr;
+                tasa.Text = clientes[0].tasa.ToString();
+                distMensual.Text = clientes[0].distribucion_mensual.ToString();
+                distAnual.Text = clientes[0].distribucion_anual.ToString();
+                maxMensual.Text = clientes[0].maximo_mensual.ToString();
+                maxAnual.Text = clientes[0].maximo_anual.ToString();
+                cuotaMensual.Text = clientes[0].cuota_mensual.ToString();
+                cuotaAnual.Text = clientes[0].cuota_anual.ToString();
+                maxTotal.Text = clientes[0].maximo_total.ToString();
+
             }
             catch {
                 MessageBox.Show("Ingrese cedula de un empleado BdV");

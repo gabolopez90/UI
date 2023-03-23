@@ -198,23 +198,22 @@
         <!--#endregion-->
     </UserControl.Resources>
     <Border>
-        <Grid Name="ConsultaHipotecario">            
+        <Grid Name="ConsultaHipotecario" Margin="20">
+            <Grid.Resources>
+                <Style TargetType="{x:Type TextBox}">
+                    <Setter Property="Margin" Value="0,0,0,4" />
+                </Style>
+            </Grid.Resources>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition></RowDefinition>
-                <RowDefinition></RowDefinition>
-                <RowDefinition></RowDefinition>
-                <RowDefinition></RowDefinition>
-            </Grid.RowDefinitions>
+            </Grid.ColumnDefinitions>            
             
             <!--region Buscador-->
             <StackPanel Grid.Row="0" 
-                        Margin="5">                
+                        >                
                 <TextBlock 
                        Text="Ingrese Cédula: "
                     HorizontalAlignment="Center"/>
@@ -247,50 +246,45 @@
                     </Button>
                 </Grid>
                 
+                <TextBlock Text="Nombre: " FontWeight="Bold"></TextBlock>
+                <TextBlock x:Name="nombreCliente"></TextBlock>
                 
+                <TextBlock Text="Nivel: " FontWeight="Bold"></TextBlock>
+                <TextBlock x:Name="nivelCliente"></TextBlock>
+                
+                <TextBlock Text="Cargo: " FontWeight="Bold"></TextBlock>
+                <TextBlock x:Name="cargoCliente"></TextBlock>
+                
+                <TextBlock Text="Fecha de Ingreso: " FontWeight="Bold"></TextBlock>
+                <TextBlock x:Name="fechaIngCliente"></TextBlock>
+                
+                <TextBlock Text="Observación: " FontWeight="Bold"></TextBlock>
+                <TextBlock x:Name="observacion"></TextBlock>
+                
+                <TextBlock Text="Tasa: " FontWeight="Bold"></TextBlock>
+                <TextBlock x:Name="tasa"></TextBlock>
+
+                <TextBlock Text="Distribución Mensual: " FontWeight="Bold"></TextBlock>
+                <TextBlock x:Name="distMensual"></TextBlock>
+
+                <TextBlock Text="Distribución Anual: " FontWeight="Bold"></TextBlock>
+                <TextBlock x:Name="distAnual"></TextBlock>
+
+                <TextBlock Text="Máximo Mensual: " FontWeight="Bold"></TextBlock>
+                <TextBlock x:Name="maxMensual"></TextBlock>
+
+                <TextBlock Text="Máximo Anual: " FontWeight="Bold"></TextBlock>
+                <TextBlock x:Name="maxAnual"></TextBlock>
+
+                <TextBlock Text="Cuota Mensual: " FontWeight="Bold"></TextBlock>
+                <TextBlock x:Name="cuotaMensual"></TextBlock>
+
+                <TextBlock Text="Cuota Anual: " FontWeight="Bold"></TextBlock>
+                <TextBlock x:Name="cuotaAnual"></TextBlock>
+
+                <TextBlock Text="Máximo Total: " FontWeight="Bold"></TextBlock>
+                <TextBlock x:Name="maxTotal"></TextBlock>
             </StackPanel>
-
-            <StackPanel Grid.Row="1">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"></RowDefinition>
-                        <RowDefinition Height="*"></RowDefinition>
-                        <RowDefinition Height="*"></RowDefinition>
-                    </Grid.RowDefinitions>
-
-                    <Grid Grid.Row="0">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="60"></ColumnDefinition>
-                            <ColumnDefinition></ColumnDefinition>
-                        </Grid.ColumnDefinitions>
-
-                        <Label Content="Nombre: " FontWeight="Bold" Grid.Column="0"></Label>
-                        <Label x:Name="nombreCliente" Grid.Column="1"></Label>
-                    </Grid>
-
-                    <Grid Grid.Row="1">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="60"></ColumnDefinition>
-                            <ColumnDefinition></ColumnDefinition>
-                        </Grid.ColumnDefinitions>
-
-                        <Label Content="Nivel: " FontWeight="Bold" Grid.Column="0"></Label>
-                        <Label x:Name="nivelCliente" Grid.Column="1"></Label>
-                    </Grid>
-                    <Grid Grid.Row="2">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="60"></ColumnDefinition>
-                            <ColumnDefinition></ColumnDefinition>
-                        </Grid.ColumnDefinitions>
-
-                        <Label Content="Cargo: " FontWeight="Bold" Grid.Column="0"></Label>
-                        <Label x:Name="cargoCliente" Grid.Column="1"></Label>
-                    </Grid>
-                </Grid>
-            </StackPanel>
-                
-            
-                
             
             <!--#endregion-->
             
