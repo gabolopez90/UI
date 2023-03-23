@@ -223,7 +223,11 @@
                         <ColumnDefinition Width="40"></ColumnDefinition>
                         <ColumnDefinition Width="*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
-                    <ComboBox x:Name="NacCliente" 
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>                        
+                    </Grid.RowDefinitions>
+                    <ComboBox x:Name="nacCliente" 
                               Style="{DynamicResource ComboBoxControl}" 
                               Grid.Column="0"
                               ItemsSource="{Binding Nacionalidad}">
@@ -232,15 +236,62 @@
                              Style="{DynamicResource inputControl}" 
                              Margin="5"
                              x:Name="cedulaCliente"
+                             KeyDown="OnKeyDownHandler"
                              >                        
                     </TextBox>
+                    <Button Style="{StaticResource buttonForm}" x:Name="consultar"
+                            Content="Consultar"
+                            Margin="5" Click="consultar_Click"
+                            Grid.Row="1"
+                            Grid.Column="1">            
+                    </Button>
                 </Grid>
                 
-                <Button Style="{StaticResource buttonForm}" x:Name="consultar"
-                        Content="Consultar"
-                        Margin="5">
-                </Button>
+                
             </StackPanel>
+
+            <StackPanel Grid.Row="1">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                    </Grid.RowDefinitions>
+
+                    <Grid Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="60"></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+
+                        <Label Content="Nombre: " FontWeight="Bold" Grid.Column="0"></Label>
+                        <Label x:Name="nombreCliente" Grid.Column="1"></Label>
+                    </Grid>
+
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="60"></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+
+                        <Label Content="Nivel: " FontWeight="Bold" Grid.Column="0"></Label>
+                        <Label x:Name="nivelCliente" Grid.Column="1"></Label>
+                    </Grid>
+                    <Grid Grid.Row="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="60"></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+
+                        <Label Content="Cargo: " FontWeight="Bold" Grid.Column="0"></Label>
+                        <Label x:Name="cargoCliente" Grid.Column="1"></Label>
+                    </Grid>
+                </Grid>
+            </StackPanel>
+                
+            
+                
+            
             <!--#endregion-->
             
             
