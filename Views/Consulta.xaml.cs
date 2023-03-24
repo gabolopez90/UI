@@ -38,20 +38,28 @@ namespace UI.Views
             cedu = nacCliente.Text + cedu.Substring(cedu.Length - 8);
             try
             {
-                clientes = SQLiteDataAccess.CargaCedula(cedu);
+                if ((bool)adquisicion.IsChecked)
+                {
+                    clientes = SQLiteDataAccess.CargaCedulaAdquisicion(cedu);
+                }
+                else if ((bool)remodelacion.IsChecked)
+                {
+                    clientes = SQLiteDataAccess.CargaCedulaRemodelacion(cedu);
+                } // Consulta en base de adquisicion o remodelacion segun se marque                
                 nombreCliente.Text = clientes[0].nombre;
                 cargoCliente.Text = clientes[0].cargo;
                 nivelCliente.Text = clientes[0].nivel.ToString();
+                departamento.Text = clientes[0].departamento;
                 fechaIngCliente.Text = clientes[0].fechadeingreso;
                 observacion.Text = clientes[0].consolidado_descr;
                 tasa.Text = clientes[0].tasa.ToString();
                 distMensual.Text = clientes[0].distribucion_mensual.ToString();
                 distAnual.Text = clientes[0].distribucion_anual.ToString();
-                maxMensual.Text = clientes[0].maximo_mensual.ToString();
-                maxAnual.Text = clientes[0].maximo_anual.ToString();
-                cuotaMensual.Text = clientes[0].cuota_mensual.ToString();
-                cuotaAnual.Text = clientes[0].cuota_anual.ToString();
-                maxTotal.Text = clientes[0].maximo_total.ToString();
+                maxMensual.Text = "$" + clientes[0].maximo_mensual.ToString();
+                maxAnual.Text = "$" + clientes[0].maximo_anual.ToString();
+                cuotaMensual.Text = "$" + clientes[0].cuota_mensual.ToString();
+                cuotaAnual.Text = "$" + clientes[0].cuota_anual.ToString();
+                maxTotal.Text = "$" + clientes[0].maximo_total.ToString();
 
             }
             catch {
@@ -69,7 +77,7 @@ namespace UI.Views
         {
             if (e.Key == Key.Return)
             {
-                Consulta_cedula(sender, e);
+                consultar_Click((object)sender, e);
             }
         }//Al darle enter ejecuta la consulta
     }

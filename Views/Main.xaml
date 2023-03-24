@@ -59,10 +59,7 @@
             <Border CornerRadius="10,0,0,10"
                     Grid.Column="0">
                 <Border.Background>
-                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0.7">
-                        <GradientStop Color="{StaticResource secondaryBackColor1}" Offset="0"/>
-                        <GradientStop Color="{StaticResource secondaryBackColor2}" Offset="1"/>
-                    </LinearGradientBrush>
+                    <SolidColorBrush Color="{StaticResource secondaryBackColor2}"></SolidColorBrush>
                 </Border.Background>
 
                 <StackPanel>
@@ -70,7 +67,7 @@
                                 Height="35"
                                 Margin="15,25,0,40">
                         <Image Source="/Images/icon.ico" Height="30"/>
-                        <TextBlock Text="Modulo de Hipotecario"
+                        <TextBlock Text="Modulo de Decisión"
                                    Foreground="{StaticResource titleColor2}"
                                    FontSize="16"                                   
                                    FontWeight="Medium"
@@ -81,7 +78,7 @@
                 
                 <!--Menu-->
                 <RadioButton Style="{StaticResource menuButton}"
-                                 Tag="{StaticResource color1}"
+                                 Tag="{StaticResource color5}"
                                  IsChecked="True"
                                  Command="{Binding ShowInicioCommand}"                                 
                                  x:Name="Inicio">
@@ -120,10 +117,7 @@
             <Border CornerRadius="0,10,10,0"
                     Grid.Column="1">
                 <Border.Background>
-                    <LinearGradientBrush StartPoint="1,1" EndPoint="0,0">
-                        <GradientStop Color="{StaticResource primaryBackColor1}" Offset="0"/>
-                        <GradientStop Color="{StaticResource primaryBackColor2}" Offset="1"/>
-                    </LinearGradientBrush>
+                    <SolidColorBrush Color="{StaticResource secondaryBackColor2}"></SolidColorBrush>
                 </Border.Background>
 
                 <Grid>

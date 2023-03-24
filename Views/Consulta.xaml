@@ -37,7 +37,7 @@
             </Setter>
         </Style>
         <SolidColorBrush x:Key="ComboBox.Static.Background" Color="Transparent"/>
-        <SolidColorBrush x:Key="ComboBox.Static.Border" Color="{StaticResource winBorderColor1}"/>
+        <SolidColorBrush x:Key="ComboBox.Static.Border" Color="{StaticResource winBorderColor2}"/>
         <SolidColorBrush x:Key="ComboBox.MouseOver.Background" Color="#FFBEE6FD"/>
         <SolidColorBrush x:Key="ComboBox.MouseOver.Border" Color="#FF3C7FB1"/>
         <SolidColorBrush x:Key="ComboBox.Pressed.Background" Color="#FFC4E5F6"/>
@@ -52,7 +52,7 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type ToggleButton}">
-                        <Border x:Name="templateRoot" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" SnapsToDevicePixels="true">
+                        <Border CornerRadius="3,0,0,3" x:Name="templateRoot" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" SnapsToDevicePixels="true">
                             <Border x:Name="splitBorder" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1" HorizontalAlignment="Right" Margin="0,-1,-1,-1" Width="{DynamicResource {x:Static SystemParameters.VerticalScrollBarWidthKey}}">
                                 <Path x:Name="arrow" Data="M0,0 L0,2 L4,6 L8,2 L8,0 L4,4 z" Fill="{TemplateBinding TextElement.Foreground}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                             </Border>
@@ -138,7 +138,7 @@
                 </Grid.ColumnDefinitions>
                 <Popup x:Name="PART_Popup" AllowsTransparency="true" Grid.ColumnSpan="2" IsOpen="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}" Margin="1" Placement="Bottom" PopupAnimation="{DynamicResource {x:Static SystemParameters.ComboBoxPopupAnimationKey}}">
                     <theme:SystemDropShadowChrome x:Name="shadow" Color="Transparent" MinWidth="{Binding ActualWidth, ElementName=templateRoot}" MaxHeight="{TemplateBinding MaxDropDownHeight}">
-                        <Border x:Name="dropDownBorder" Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" BorderBrush="{StaticResource color1}" BorderThickness="1">
+                        <Border x:Name="dropDownBorder" Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" BorderBrush="{StaticResource color4}" BorderThickness="1">
                             <ScrollViewer x:Name="DropDownScrollViewer">
                                 <Grid x:Name="grid" RenderOptions.ClearTypeHint="Enabled">
                                     <Canvas x:Name="canvas" HorizontalAlignment="Left" Height="0" VerticalAlignment="Top" Width="0">
@@ -207,86 +207,134 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
-                <ColumnDefinition></ColumnDefinition>
-                <ColumnDefinition></ColumnDefinition>
-            </Grid.ColumnDefinitions>            
-            
-            <!--region Buscador-->
-            <StackPanel Grid.Row="0" 
-                        >                
-                <TextBlock 
-                       Text="Ingrese Cédula: "
-                    HorizontalAlignment="Center"/>
-                <Grid>
+                <ColumnDefinition></ColumnDefinition>                
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Grid.Column="0">                
+
+                <!--region Buscador-->
+                <Label 
+                    Content="Ingrese Cédula: "
+                    HorizontalAlignment="Center"
+                    FontWeight="Bold" 
+                    FontSize="15" 
+                    />
+                <Grid >
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="40"></ColumnDefinition>
                         <ColumnDefinition Width="*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"></RowDefinition>
-                        <RowDefinition Height="*"></RowDefinition>                        
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
                     </Grid.RowDefinitions>
                     <ComboBox x:Name="nacCliente" 
                               Style="{DynamicResource ComboBoxControl}" 
                               Grid.Column="0"
-                              ItemsSource="{Binding Nacionalidad}">
+                              ItemsSource="{Binding Nacionalidad}" FontSize="15">
                     </ComboBox>
                     <TextBox Grid.Column="1" 
-                             Style="{DynamicResource inputControl}" 
-                             Margin="5"
+                             Style="{DynamicResource inputControl}"                              
                              x:Name="cedulaCliente"
                              KeyDown="OnKeyDownHandler"
+                             Height="Auto"
+                             FontSize="15"
                              >                        
                     </TextBox>
                     <Button Style="{StaticResource buttonForm}" x:Name="consultar"
                             Content="Consultar"
-                            Margin="5" Click="consultar_Click"
+                            Click="consultar_Click"
+                            Margin="0 10 0 0"
                             Grid.Row="1"
-                            Grid.Column="1">            
-                    </Button>
+                            Grid.Column="1"
+                            FontSize="15">            
+                    </Button>                    
                 </Grid>
+                <!--#endregion-->
+
+                <!--#region Botones Radio-->
+                <RadioButton                         
+                    Grid.Column="0"
+                    Content="Adquisición"
+                    GroupName="tipoCred"
+                    IsChecked="True"
+                    x:Name="adquisicion"
+                    Margin="15"
+                    BorderBrush="{StaticResource color4}"></RadioButton>
+                <RadioButton
+                    Grid.Column="1"
+                    Content="Remodelación"
+                    GroupName="tipoCred"
+                    x:Name="remodelacion"
+                    Margin="15"
+                    BorderBrush="{StaticResource color4}"></RadioButton>
                 
-                <TextBlock Text="Nombre: " FontWeight="Bold"></TextBlock>
-                <TextBlock x:Name="nombreCliente"></TextBlock>
-                
-                <TextBlock Text="Nivel: " FontWeight="Bold"></TextBlock>
-                <TextBlock x:Name="nivelCliente"></TextBlock>
-                
-                <TextBlock Text="Cargo: " FontWeight="Bold"></TextBlock>
-                <TextBlock x:Name="cargoCliente"></TextBlock>
-                
-                <TextBlock Text="Fecha de Ingreso: " FontWeight="Bold"></TextBlock>
-                <TextBlock x:Name="fechaIngCliente"></TextBlock>
-                
-                <TextBlock Text="Observación: " FontWeight="Bold"></TextBlock>
-                <TextBlock x:Name="observacion"></TextBlock>
-                
-                <TextBlock Text="Tasa: " FontWeight="Bold"></TextBlock>
-                <TextBlock x:Name="tasa"></TextBlock>
+                <Separator Height="50" Opacity="0"></Separator>
 
-                <TextBlock Text="Distribución Mensual: " FontWeight="Bold"></TextBlock>
-                <TextBlock x:Name="distMensual"></TextBlock>
+                <Label Content="Información Personal" 
+                       FontWeight="Bold" 
+                       FontSize="15" 
+                       HorizontalAlignment="Center">                    
+                </Label>
 
-                <TextBlock Text="Distribución Anual: " FontWeight="Bold"></TextBlock>
-                <TextBlock x:Name="distAnual"></TextBlock>
+                <TextBlock Text="Nombre: " Style="{StaticResource titulo}"></TextBlock>
+                <TextBlock x:Name="nombreCliente" Style="{StaticResource subtitulo}"></TextBlock>
 
-                <TextBlock Text="Máximo Mensual: " FontWeight="Bold"></TextBlock>
-                <TextBlock x:Name="maxMensual"></TextBlock>
+                <TextBlock Text="Nivel: " Style="{StaticResource titulo}"></TextBlock>
+                <TextBlock x:Name="nivelCliente" Style="{StaticResource subtitulo}"></TextBlock>
 
-                <TextBlock Text="Máximo Anual: " FontWeight="Bold"></TextBlock>
-                <TextBlock x:Name="maxAnual"></TextBlock>
+                <TextBlock Text="Cargo: " Style="{StaticResource titulo}"></TextBlock>
+                <TextBlock x:Name="cargoCliente" Style="{StaticResource subtitulo}"></TextBlock>
 
-                <TextBlock Text="Cuota Mensual: " FontWeight="Bold"></TextBlock>
-                <TextBlock x:Name="cuotaMensual"></TextBlock>
+                <TextBlock Text="Departamento: " Style="{StaticResource titulo}"></TextBlock>
+                <TextBlock x:Name="departamento" Style="{StaticResource subtitulo}"></TextBlock>
 
-                <TextBlock Text="Cuota Anual: " FontWeight="Bold"></TextBlock>
-                <TextBlock x:Name="cuotaAnual"></TextBlock>
+                <TextBlock Text="Fecha de Ingreso: " Style="{StaticResource titulo}"></TextBlock>
+                <TextBlock x:Name="fechaIngCliente" Style="{StaticResource subtitulo}"></TextBlock>
 
-                <TextBlock Text="Máximo Total: " FontWeight="Bold"></TextBlock>
-                <TextBlock x:Name="maxTotal"></TextBlock>
-            </StackPanel>
+                <TextBlock Text="Observación: " Style="{StaticResource titulo}"></TextBlock>
+                <TextBlock x:Name="observacion" Style="{StaticResource subtitulo}"></TextBlock>
             
-            <!--#endregion-->
+                
+            </StackPanel>            
+
+            
+            <StackPanel Grid.Column="1" Margin="20,0,0,0">
+
+                <Separator Height="145" Opacity="0"></Separator>
+                
+                <Label Content="Información del Crédito" 
+                       FontWeight="Bold" 
+                       FontSize="15" 
+                       HorizontalAlignment="Center">                    
+                </Label>                   
+                
+
+                <TextBlock Text="Tasa: " Style="{StaticResource titulo}"></TextBlock>
+                <TextBlock x:Name="tasa" Style="{StaticResource subtitulo}"></TextBlock>
+
+                <TextBlock Text="Distribución Mensual: " Style="{StaticResource titulo}"></TextBlock>
+                <TextBlock x:Name="distMensual" Style="{StaticResource subtitulo}"></TextBlock>
+
+                <TextBlock Text="Distribución Anual: " Style="{StaticResource titulo}"></TextBlock>
+                <TextBlock x:Name="distAnual" Style="{StaticResource subtitulo}"></TextBlock>
+
+                <TextBlock Text="Máximo Mensual: " Style="{StaticResource titulo}"></TextBlock>
+                <TextBlock x:Name="maxMensual" Style="{StaticResource subtitulo}"></TextBlock>
+
+                <TextBlock Text="Máximo Anual: " Style="{StaticResource titulo}"></TextBlock>
+                <TextBlock x:Name="maxAnual" Style="{StaticResource subtitulo}"></TextBlock>
+
+                <TextBlock Text="Cuota Mensual: " Style="{StaticResource titulo}"></TextBlock>
+                <TextBlock x:Name="cuotaMensual" Style="{StaticResource subtitulo}"></TextBlock>
+
+                <TextBlock Text="Cuota Anual: " Style="{StaticResource titulo}"></TextBlock>
+                <TextBlock x:Name="cuotaAnual" Style="{StaticResource subtitulo}"></TextBlock>
+
+                <TextBlock Text="Máximo Total: " Style="{StaticResource titulo}"></TextBlock>
+                <TextBlock x:Name="maxTotal" Style="{StaticResource subtitulo}"></TextBlock>
+            </StackPanel>            
             
             
         </Grid>

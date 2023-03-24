@@ -11,6 +11,7 @@ namespace UI.Models
         public string? nombre { get; set; }
         public int nivel { get; set; }
         public string? cargo { get; set; }
+        public string? departamento { get; set; }
         public string? fechadeingreso { get; set; }
         public string? consolidado { get; set; }
         public string? consolidado_descr { get; set; }

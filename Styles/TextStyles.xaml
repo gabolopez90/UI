@@ -2,9 +2,9 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     
     <!--#region Texbox-->
-    <SolidColorBrush x:Key="TextBox.Static.Border" Color="{StaticResource winBorderColor1}"/>
-    <SolidColorBrush x:Key="TextBox.MouseOver.Border" Color="#FFC5DAED"/>
-    <SolidColorBrush x:Key="TextBox.Focus.Border" Color="#FFB5CFE7"/>
+    <SolidColorBrush x:Key="TextBox.Static.Border" Color="{StaticResource winBorderColor2}"/>
+    <SolidColorBrush x:Key="TextBox.MouseOver.Border" Color="{StaticResource winBorderColor1}"/>
+    <SolidColorBrush x:Key="TextBox.Focus.Border" Color="{StaticResource winBorderColor2}"/>
     <Style x:Key="inputControl" TargetType="{x:Type TextBox}">
         <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"/>
         <Setter Property="BorderBrush" Value="{StaticResource TextBox.Static.Border}"/>
@@ -19,7 +19,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TextBox}">
-                    <Border CornerRadius="10" x:Name="border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" SnapsToDevicePixels="True">
+                    <Border CornerRadius="0,3,3,0" x:Name="border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" SnapsToDevicePixels="True">
                         <ScrollViewer x:Name="PART_ContentHost" Focusable="false" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
                     </Border>
                     <ControlTemplate.Triggers>

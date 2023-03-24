@@ -14,10 +14,17 @@ namespace UI.Models
 
     public class SQLiteDataAccess
     {
-        public static List<ClientesModel> CargaCedula(string CEDULA)
+        public static List<ClientesModel> CargaCedulaAdquisicion(string CEDULA)
         {
             using IDbConnection cnn = new SQLiteConnection(LoadConnectionString());
             var output = cnn.Query<ClientesModel>("Select * from HIPOTECARIO_ADQUISICION where CEDULA = '" + CEDULA + "'", new DynamicParameters());
+            return output.ToList();
+        }
+
+        public static List<ClientesModel> CargaCedulaRemodelacion(string CEDULA)
+        {
+            using IDbConnection cnn = new SQLiteConnection(LoadConnectionString());
+            var output = cnn.Query<ClientesModel>("Select * from HIPOTECARIO_REMODELACION where CEDULA = '" + CEDULA + "'", new DynamicParameters());
             return output.ToList();
         }
 
