@@ -28,6 +28,13 @@ namespace UI.Models
             return output.ToList();
         }
 
+        public static List<ConsolidadoAcrClienteModel> CargaCosolicitante(string CEDULA)
+        {
+            using IDbConnection cnn = new SQLiteConnection(LoadConnectionString());
+            var output = cnn.Query<ConsolidadoAcrClienteModel>("Select * from CONSOLIDADO_ACR_CLIENTE where CEDULA = '" + CEDULA + "'", new DynamicParameters());
+            return output.ToList();
+        }
+
         private static string LoadConnectionString(string id = "Default")
         {
             return ConfigurationManager.ConnectionStrings[id].ConnectionString;

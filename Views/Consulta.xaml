@@ -3,12 +3,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800"
+             mc:Ignorable="d"              
              Background="{StaticResource whiteBackground}"
              FontFamily="Nunito"
              xmlns:theme="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.AeroLite">
-     <UserControl.Resources>        
+     <UserControl.Resources>   
+         
         <!--#region Combobox Style-->
         <Style x:Key="FocusVisual">
             <Setter Property="Control.Template">
@@ -196,6 +196,7 @@
             </Style.Triggers>
         </Style>
         <!--#endregion-->
+         
     </UserControl.Resources>
     <Border>
         <Grid Name="ConsultaHipotecario" Margin="20">
@@ -212,7 +213,7 @@
 
             <StackPanel Grid.Column="0">                
 
-                <!--region Buscador-->
+                <!--region Consulta Cliente-->
                 <Label 
                     Content="Ingrese Cédula: "
                     HorizontalAlignment="Center"
@@ -229,6 +230,7 @@
                         <RowDefinition Height="*"></RowDefinition>
                         <RowDefinition Height="*"></RowDefinition>
                     </Grid.RowDefinitions>
+                    
                     <ComboBox x:Name="nacCliente" 
                               Style="{DynamicResource ComboBoxControl}" 
                               Grid.Column="0"
@@ -237,24 +239,23 @@
                     <TextBox Grid.Column="1" 
                              Style="{DynamicResource inputControl}"                              
                              x:Name="cedulaCliente"
-                             KeyDown="OnKeyDownHandler"
-                             Height="Auto"
+                             KeyDown="OnKeyDownHandler"                             
                              FontSize="15"
-                             >                        
-                    </TextBox>
-                    <Button Style="{StaticResource buttonForm}" x:Name="consultar"
-                            Content="Consultar"
-                            Click="consultar_Click"
-                            Margin="0 10 0 0"
-                            Grid.Row="1"
-                            Grid.Column="1"
-                            FontSize="15">            
-                    </Button>                    
+                             PreviewTextInput="SoloNumero_PreviewTextInput">                        
+                    </TextBox>                    
                 </Grid>
+                <Button Style="{StaticResource buttonForm}" x:Name="consultar"
+                        Content="Consultar"
+                        Click="Consultar_Click"
+                        Margin="0 10 0 0"                            
+                        FontSize="15">
+                </Button>
+                
                 <!--#endregion-->
 
                 <!--#region Botones Radio-->
-                <RadioButton                         
+                <StackPanel Orientation="Horizontal">
+                    <RadioButton                         
                     Grid.Column="0"
                     Content="Adquisición"
                     GroupName="tipoCred"
@@ -262,16 +263,18 @@
                     x:Name="adquisicion"
                     Margin="15"
                     BorderBrush="{StaticResource color4}"></RadioButton>
-                <RadioButton
+                    <RadioButton
                     Grid.Column="1"
                     Content="Remodelación"
                     GroupName="tipoCred"
                     x:Name="remodelacion"
                     Margin="15"
                     BorderBrush="{StaticResource color4}"></RadioButton>
+                </StackPanel>
                 
-                <Separator Height="50" Opacity="0"></Separator>
+                <!--#endregion-->
 
+                <!--#region Informacion Cliente-->
                 <Label Content="Información Personal" 
                        FontWeight="Bold" 
                        FontSize="15" 
@@ -295,21 +298,113 @@
 
                 <TextBlock Text="Observación: " Style="{StaticResource titulo}"></TextBlock>
                 <TextBlock x:Name="observacion" Style="{StaticResource subtitulo}"></TextBlock>
-            
+
+                <TextBlock Text="4 Últimos Rendimientos: " Style="{StaticResource titulo}"></TextBlock>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock x:Name="r1" Style="{StaticResource subtitulo}"></TextBlock>
+                    <TextBlock x:Name="r2" Style="{StaticResource subtitulo}"></TextBlock>
+                    <TextBlock x:Name="r3" Style="{StaticResource subtitulo}"></TextBlock>
+                    <TextBlock x:Name="r4" Style="{StaticResource subtitulo}"></TextBlock>
+                </StackPanel>
+                
+                
+                <!--#endregion-->
                 
             </StackPanel>            
 
+            <!--#region Consulta Co-Solicitante -->
             
             <StackPanel Grid.Column="1" Margin="20,0,0,0">
 
-                <Separator Height="145" Opacity="0"></Separator>
+                <Label 
+                    Content="Ingrese Cédula Co-Solicitante: "
+                    HorizontalAlignment="Center"
+                    FontWeight="Bold" 
+                    FontSize="15" 
+                    />
+                <Grid >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="40"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <ComboBox x:Name="nacCosolicitante" 
+                              Style="{DynamicResource ComboBoxControl}" 
+                              Grid.Column="0"
+                              ItemsSource="{Binding Nacionalidad}" FontSize="15">
+                    </ComboBox>
+                    <TextBox Grid.Column="1" 
+                             Style="{DynamicResource inputControl}"                              
+                             x:Name="cedulaCosolicitante"                                                          
+                             FontSize="15"
+                             KeyDown="OnKeyDownHandler"
+                             PreviewTextInput="SoloNumero_PreviewTextInput"
+                             >
+                    </TextBox>
+                    </Grid>
+                <!--#endregion-->
+
+                <!--#region Informacion Co-Solicitante-->
+                <Label Content="Información del Co-Solicitante" 
+                       FontWeight="Bold" 
+                       FontSize="15" 
+                       HorizontalAlignment="Center">
+                </Label>
+
+                <TextBlock Text="Observación Co-Solicitante" Style="{StaticResource titulo}"></TextBlock>
+                <TextBlock x:Name="calificaCosolicitante" Style="{StaticResource subtitulo}"></TextBlock>
+
+                <TextBlock Text="Ingresos Co-Solicitante" Style="{StaticResource titulo}"></TextBlock>
+                <TextBox Style="{DynamicResource inputControl}"
+                         FontSize="15"
+                         x:Name="ingresosCo"
+                         PreviewTextInput="SoloNumero_PreviewTextInput"></TextBox>
+
+                <TextBlock Text="Deducciones Co-Solicitante" Style="{StaticResource titulo}"></TextBlock>
+                <TextBox Style="{DynamicResource inputControl}"
+                         FontSize="15"
+                         x:Name="deduccionesCo"
+                         PreviewTextInput="SoloNumero_PreviewTextInput"></TextBox>
+                <!--<TextBlock Text="" Style="{StaticResource titulo}"></TextBlock>
+                <TextBlock x:Name="" Style="{StaticResource subtitulo}"></TextBlock>-->
+                <!--#endregion-->
                 
+            </StackPanel>
+
+            <StackPanel Grid.Column="2" Margin="20,0,0,0">
+                
+                <Label 
+                    Content="Monto Solicitado: "
+                    HorizontalAlignment="Center"
+                    FontWeight="Bold" 
+                    FontSize="15" 
+                    />
+                <TextBox Style="{DynamicResource inputControl}"                              
+                    x:Name="montoSol"                                                 
+                    FontSize="15"
+                    KeyDown="OnKeyDownHandler"
+                    PreviewTextInput="SoloNumero_PreviewTextInput">
+                </TextBox>
+
+                <Button Style="{StaticResource buttonForm}" x:Name="calcular"
+                        Content="Calcular"
+                        Click="Calcular_Click"
+                        Margin="0 10 0 0"                            
+                        FontSize="15">
+                </Button>
+
+
+                <!--#region Informacion Credito-->
                 <Label Content="Información del Crédito" 
                        FontWeight="Bold" 
                        FontSize="15" 
-                       HorizontalAlignment="Center">                    
-                </Label>                   
-                
+                       HorizontalAlignment="Center">
+                </Label>
+
 
                 <TextBlock Text="Tasa: " Style="{StaticResource titulo}"></TextBlock>
                 <TextBlock x:Name="tasa" Style="{StaticResource subtitulo}"></TextBlock>
@@ -332,11 +427,12 @@
                 <TextBlock Text="Cuota Anual: " Style="{StaticResource titulo}"></TextBlock>
                 <TextBlock x:Name="cuotaAnual" Style="{StaticResource subtitulo}"></TextBlock>
 
-                <TextBlock Text="Máximo Total: " Style="{StaticResource titulo}"></TextBlock>
+                <TextBlock Text="Monto Aprobado: " Style="{StaticResource titulo}"></TextBlock>
                 <TextBlock x:Name="maxTotal" Style="{StaticResource subtitulo}"></TextBlock>
-            </StackPanel>            
-            
-            
+                <!--#endregion-->
+
+            </StackPanel>
+
         </Grid>
     </Border>
 </UserControl>
