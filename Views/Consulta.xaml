@@ -293,11 +293,14 @@
                 <TextBlock Text="Departamento: " Style="{StaticResource titulo}"></TextBlock>
                 <TextBlock x:Name="departamento" Style="{StaticResource subtitulo}"></TextBlock>
 
+                <TextBlock Text="Reporte Directo: " Style="{StaticResource titulo}"></TextBlock>
+                <TextBlock x:Name="reporteDir" Style="{StaticResource subtitulo}"></TextBlock>
+
                 <TextBlock Text="Fecha de Ingreso: " Style="{StaticResource titulo}"></TextBlock>
                 <TextBlock x:Name="fechaIngCliente" Style="{StaticResource subtitulo}"></TextBlock>
 
-                <TextBlock Text="Observación: " Style="{StaticResource titulo}"></TextBlock>
-                <TextBlock x:Name="observacion" Style="{StaticResource subtitulo}"></TextBlock>
+                <TextBlock Text="Detalle: " Style="{StaticResource titulo}"></TextBlock>
+                <TextBlock x:Name="detalle" Style="{StaticResource subtitulo}"></TextBlock>
 
                 <TextBlock Text="4 Últimos Rendimientos: " Style="{StaticResource titulo}"></TextBlock>
                 <StackPanel Orientation="Horizontal">
@@ -312,7 +315,7 @@
                 
             </StackPanel>            
 
-            <!--#region Consulta Co-Solicitante -->
+                <!--#region Consulta Co-Solicitante-->
             
             <StackPanel Grid.Column="1" Margin="20,0,0,0">
 
@@ -355,8 +358,8 @@
                        HorizontalAlignment="Center">
                 </Label>
 
-                <TextBlock Text="Observación Co-Solicitante" Style="{StaticResource titulo}"></TextBlock>
-                <TextBlock x:Name="calificaCosolicitante" Style="{StaticResource subtitulo}"></TextBlock>
+                <TextBlock Text="Detalle Co-Solicitante" Style="{StaticResource titulo}"></TextBlock>
+                <TextBlock x:Name="detalleCosolicitante" Style="{StaticResource subtitulo}"></TextBlock>
 
                 <TextBlock Text="Ingresos Co-Solicitante" Style="{StaticResource titulo}"></TextBlock>
                 <TextBox Style="{DynamicResource inputControl}"
@@ -369,6 +372,11 @@
                          FontSize="15"
                          x:Name="deduccionesCo"
                          PreviewTextInput="SoloNumero_PreviewTextInput"></TextBox>
+
+                <TextBlock Text="Observaciones" Style="{StaticResource titulo}"></TextBlock>
+                <TextBox Style="{DynamicResource inputControl}"
+                         FontSize="15"
+                         x:Name="observaciones"></TextBox>
                 <!--<TextBlock Text="" Style="{StaticResource titulo}"></TextBlock>
                 <TextBlock x:Name="" Style="{StaticResource subtitulo}"></TextBlock>-->
                 <!--#endregion-->
@@ -377,6 +385,7 @@
 
             <StackPanel Grid.Column="2" Margin="20,0,0,0">
                 
+                <!--#region Solicitado-->
                 <Label 
                     Content="Monto Solicitado: "
                     HorizontalAlignment="Center"
@@ -386,7 +395,7 @@
                 <TextBox Style="{DynamicResource inputControl}"                              
                     x:Name="montoSol"                                                 
                     FontSize="15"
-                    KeyDown="OnKeyDownHandler"
+                    KeyDown="OnKeyDownCalcular"
                     PreviewTextInput="SoloNumero_PreviewTextInput">
                 </TextBox>
 
@@ -396,7 +405,7 @@
                         Margin="0 10 0 0"                            
                         FontSize="15">
                 </Button>
-
+                <!--#endregion-->
 
                 <!--#region Informacion Credito-->
                 <Label Content="Información del Crédito" 
@@ -431,6 +440,12 @@
                 <TextBlock x:Name="maxTotal" Style="{StaticResource subtitulo}"></TextBlock>
                 <!--#endregion-->
 
+                <Button Style="{StaticResource buttonForm}" x:Name="archivar"
+                        Content="Archivar"
+                        Click="Archivar_Click"
+                        Margin="0 10 0 0"                            
+                        FontSize="15">
+                </Button>
             </StackPanel>
 
         </Grid>

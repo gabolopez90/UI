@@ -17,7 +17,6 @@ namespace UI.ViewModels
                 "J",
                 "P",
                 "M"
-            };
-
+        };
     }
 }
