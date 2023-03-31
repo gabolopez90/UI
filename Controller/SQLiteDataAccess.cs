@@ -15,6 +15,7 @@ namespace UI.Models
 
     public class SQLiteDataAccess
     {
+        // Carga base de credito adquisicion
         public static List<ClientesModel> CargaCedulaAdquisicion(string CEDULA)
         {
             using IDbConnection cnn = new SQLiteConnection(LoadConnectionString());
@@ -22,6 +23,7 @@ namespace UI.Models
             return output.ToList();
         }
 
+        // Carga base de credito remodelacion
         public static List<ClientesModel> CargaCedulaRemodelacion(string CEDULA)
         {
             using IDbConnection cnn = new SQLiteConnection(LoadConnectionString());
@@ -29,6 +31,7 @@ namespace UI.Models
             return output.ToList();
         }
 
+        // Carga informacion para co solicitante
         public static List<ConsolidadoAcrClienteModel> CargaCosolicitante(string CEDULA)
         {
             using IDbConnection cnn = new SQLiteConnection(LoadConnectionString());
@@ -36,6 +39,7 @@ namespace UI.Models
             return output.ToList();
         }
 
+        // Carga reporte directo por departamento
         public static List<DepartamentosModel> BuscaDepartamento(string departamento)
         {
             using IDbConnection cnn = new SQLiteConnection(LoadConnectionString());
@@ -43,6 +47,14 @@ namespace UI.Models
             return output.ToList();
         }
 
+        public static List<AsignacionesModel> BuscaAsignaciones(string departamento)
+        {
+            using IDbConnection cnn = new SQLiteConnection(LoadConnectionString());
+            var output = cnn.Query<AsignacionesModel>("Select * from ASIGNACIONES where DEPARTAMENTO = '" + departamento + "'", new DynamicParameters());
+            return output.ToList();
+        }
+
+        // Archivar
         public static void Archivado(string FECHA, string CEDULA, string NOMBRE, string CARGO, string NIVEL, string DEPARTAMENTO, 
             string REPORTE_DIRECTO, string FECHA_INGRESO, string R1, string R2, string R3, string R4, string MODALIDAD_CREDITO, 
             string CI_COSOLICITANTE, string INGRESOS_COSOLICITANTE, string CARGAS_COSOLICITANTE, string CALIFICA, 
