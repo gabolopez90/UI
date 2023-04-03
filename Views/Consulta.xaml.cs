@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Numerics;
@@ -16,6 +17,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using UI.Controller;
 using UI.Models;
 
 namespace UI.Views
@@ -28,7 +30,9 @@ namespace UI.Views
         List<ClientesModel> clientes;
         List<ConsolidadoAcrClienteModel> cosolicitante;
         List<DepartamentosModel> encargados;
-        double monto_max, cuota_mensual, cuota_anual, tasaAnual;
+        List<AsignacionesModel> asignaciones;
+        List<EvaluadosModel> evaluados;
+        double monto_max, cuota_mensual, cuota_anual, tasaAnual, cuposDiferencia, cuposUsados;
         int nroCuotasMensual, nroCuotasAnual;
         string cedu, ceduCo;
 
@@ -123,6 +127,58 @@ namespace UI.Views
                 distAnual.Text = clientes[0].distribucion_anual.ToString();
                
                 monto_max = Double.Parse(clientes[0].maximo_total.ToString());
+
+                try
+                {
+                    evaluados = SQLiteDataAccess.Evaluados(clientes[0].departamento);
+                    asignaciones = SQLiteDataAccess.BuscaAsignaciones(clientes[0].departamento);
+                    // Compara cupos con asignacion
+
+                    if (evaluados.Count > 0)
+                    {
+                        if (asignaciones[0].tipo_asignacion == "Semestral")
+                        {
+                            int semestre = System.DateTime.Now.Month <= 6 ? 1 : 2;
+                            MessageBox.Show(semestre.ToString());
+                            if (semestre == 1)
+                            {
+                                cuposUsados = evaluados.Count(item => Int32.Parse(item.fecha.Substring(3, 2)) <= 6);
+                            }
+                            else
+                            {
+                                cuposUsados = evaluados.Count(item => Int32.Parse(item.fecha.Substring(3, 2)) > 6);
+                            }
+                        }
+                        else if (asignaciones[0].tipo_asignacion == "Trimestral")
+                        {
+
+                        }
+                        else
+                        {
+
+                        }
+                    }
+
+
+                    
+                    //cuposDiferencia = asignaciones[0].asignacion - evaluados;
+                    cuposAsignados.Text = asignaciones[0].asignacion.ToString();
+                    cuposRestantes.Text = cuposDiferencia.ToString();
+                    tipoCupo.Text = asignaciones[0].tipo_asignacion;
+
+                    if (cuposDiferencia >= 0){
+                        cuposRestantes.Background = Brushes.White;
+                        cuposRestantes.Foreground = Brushes.Black;
+                    }else{
+                        cuposRestantes.Background = Brushes.DarkRed;
+                        cuposRestantes.Foreground = Brushes.White;
+                    }// Si hay un area consumio ya sus cupos levanta alerta
+                }
+                catch
+                {
+                    MessageBox.Show("Problema con Departamento");
+                }
+                
             }
             catch {
                 MessageBox.Show("Ingrese cedula de un empleado BdV");
@@ -167,8 +223,7 @@ namespace UI.Views
         private void Archivar_Click(object sender, RoutedEventArgs e)
         {
             try
-            {
-                //string FECHA = System.DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss");
+            {                
                 string FECHA = System.DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss");
                 string CEDULA = cedu;
                 string NOMBRE = nombreCliente.Text;
@@ -182,9 +237,9 @@ namespace UI.Views
                 string R3 = r3.Text;
                 string R4 = r4.Text;
                 string MODALIDAD_CREDITO = (bool)adquisicion.IsChecked ? "ADQUISICION" : "REMODELACION";
-                string CI_COSOLICITANTE = ceduCo;
-                string INGRESOS_COSOLICITANTE = ingresosCo.Text;
-                string CARGAS_COSOLICITANTE = deduccionesCo.Text;
+                string CI_COSOLICITANTE = cedulaCosolicitante.Text.Length > 0 ? ceduCo : "";
+                string INGRESOS_COSOLICITANTE = cedulaCosolicitante.Text.Length > 0 ? ingresosCo.Text : "0.00";
+                string CARGAS_COSOLICITANTE = cedulaCosolicitante.Text.Length > 0 ? deduccionesCo.Text : "0.00";
                 string CALIFICA = detalle.Text;
                 string CALIFICA_COSOLICITANTE = detalleCosolicitante.Text;
                 string MONTO_SOLICITADO = montoSol.Text;
@@ -198,7 +253,7 @@ namespace UI.Views
                 string OBSERVACIONES = observaciones.Text;
 
 
-                SQLiteDataAccess.Archivado(FECHA, CEDULA, NOMBRE, CARGO, NIVEL, DEPARTAMENTO, REPORTE_DIRECTO, 
+                SQLiteArchivar.Archivado(FECHA, CEDULA, NOMBRE, CARGO, NIVEL, DEPARTAMENTO, REPORTE_DIRECTO, 
                     FECHA_INGRESO, R1, R2, R3, R4, MODALIDAD_CREDITO, CI_COSOLICITANTE, INGRESOS_COSOLICITANTE, 
                     CARGAS_COSOLICITANTE, CALIFICA, CALIFICA_COSOLICITANTE, MONTO_SOLICITADO, TASA, DIST_MENSUAL, DIST_ANUAL,
                     CUOTA_MENSUAL, CUOTA_ANUAL, MONTO_APROBADO, ESPECIALISTA, OBSERVACIONES);
@@ -217,7 +272,7 @@ namespace UI.Views
         {
             if (e.Key == Key.Return)
             {
-                Consultar_Click((object)sender, e);
+                Consultar_Click((object)sender, e);                
             }
         }//Al darle enter ejecuta la consulta
 

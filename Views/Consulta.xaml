@@ -381,6 +381,23 @@
                 <TextBlock x:Name="" Style="{StaticResource subtitulo}"></TextBlock>-->
                 <!--#endregion-->
                 
+                <!--#region Asignaciones -->
+                <Label Content="Información del Departamento" 
+                       FontWeight="Bold" 
+                       FontSize="15" 
+                       HorizontalAlignment="Center">
+                </Label>
+                
+                <TextBlock Text="Cupos Asignados" Style="{StaticResource titulo}"></TextBlock>
+                <TextBlock x:Name="cuposAsignados" Style="{StaticResource subtitulo}"></TextBlock>
+
+                <TextBlock Text="Cupos Restantes" Style="{StaticResource titulo}"></TextBlock>
+                <TextBlock x:Name="cuposRestantes" Style="{StaticResource subtitulo}"></TextBlock>
+
+                <TextBlock Text="Tipo de Cupo" Style="{StaticResource titulo}"></TextBlock>
+                <TextBlock x:Name="tipoCupo" Style="{StaticResource subtitulo}"></TextBlock>
+                <!--#endregion-->
+                
             </StackPanel>
 
             <StackPanel Grid.Column="2" Margin="20,0,0,0">

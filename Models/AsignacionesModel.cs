@@ -9,7 +9,7 @@ namespace UI.Models
     public class AsignacionesModel
     {
         public string departamento { get; set; }
-        public string asignacion { get; set; }
+        public int asignacion { get; set; }
         public string tipo_asignacion { get; set; }
     }
 }
