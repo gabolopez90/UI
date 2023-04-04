@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Numerics;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
@@ -137,31 +138,41 @@ namespace UI.Views
                     if (evaluados.Count > 0)
                     {
                         if (asignaciones[0].tipo_asignacion == "Semestral")
-                        {
-                            int semestre = System.DateTime.Now.Month <= 6 ? 1 : 2;
-                            MessageBox.Show(semestre.ToString());
-                            if (semestre == 1)
+                        {                            
+                            if (System.DateTime.Now.Month <= 6)
                             {
-                                cuposUsados = evaluados.Count(item => Int32.Parse(item.fecha.Substring(3, 2)) <= 6);
+                                cuposUsados = evaluados.Count(item => int.Parse(item.fecha.Substring(3, 2)) <= 6);
                             }
                             else
                             {
-                                cuposUsados = evaluados.Count(item => Int32.Parse(item.fecha.Substring(3, 2)) > 6);
+                                cuposUsados = evaluados.Count(item => int.Parse(item.fecha.Substring(3, 2)) > 6);
                             }
                         }
                         else if (asignaciones[0].tipo_asignacion == "Trimestral")
-                        {
-
+                        {                            
+                            switch (System.DateTime.Now.Month)
+                            {
+                                case <= 3:
+                                    cuposUsados = evaluados.Count(item => int.Parse(item.fecha.Substring(3, 2)) <= 3);
+                                    break;
+                                case > 3 and <= 6 :
+                                    cuposUsados = evaluados.Count(item => int.Parse(item.fecha.Substring(3, 2)) is > 3 and <= 6);
+                                    break;
+                                case > 6 and <= 9 :
+                                    cuposUsados = evaluados.Count(item => int.Parse(item.fecha.Substring(3, 2)) is > 6 and <= 9);
+                                    break;
+                                case >9 and <= 12 :
+                                    cuposUsados = evaluados.Count(item => int.Parse(item.fecha.Substring(3, 2)) is > 9 and <= 12);
+                                    break;
+                            }
                         }
                         else
                         {
-
+                            cuposUsados = evaluados.Count(item => int.Parse(item.fecha.Substring(3, 2)) == System.DateTime.Now.Month);
                         }
                     }
-
-
-                    
-                    //cuposDiferencia = asignaciones[0].asignacion - evaluados;
+                    MessageBox.Show(cuposUsados.ToString());
+                    cuposDiferencia = asignaciones[0].asignacion - cuposUsados;
                     cuposAsignados.Text = asignaciones[0].asignacion.ToString();
                     cuposRestantes.Text = cuposDiferencia.ToString();
                     tipoCupo.Text = asignaciones[0].tipo_asignacion;

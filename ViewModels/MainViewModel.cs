@@ -43,12 +43,14 @@ namespace UI.ViewModels
         public ICommand ShowInicioCommand { get; set; }
         public ICommand ShowConsultaCommand { get; set; }
         public ICommand ShowInformeCommand { get; set; }
+        public ICommand ShowEstatusCommand { get; set; }
 
         public MainViewModel()
         {
             ShowInicioCommand = new ViewModelCommand(ExecuteShowInicioCommand);
             ShowConsultaCommand = new ViewModelCommand(ExecuteShowConsultaCommand);
             ShowInformeCommand = new ViewModelCommand(ExecuteShowInformeCommand);
+            ShowEstatusCommand = new ViewModelCommand(ExecuteShowEstatusCommand);
 
             ExecuteShowInicioCommand(obj: null);
         }
@@ -72,6 +74,13 @@ namespace UI.ViewModels
             CurrentChildView = new InformeModel();
             Caption = "Informe";
             Icon = IconChar.File;
+        }
+
+        private void ExecuteShowEstatusCommand(object obj)
+        {
+            CurrentChildView = new EstatusModel();
+            Caption = "Estatus";
+            Icon = IconChar.FolderTree;
         }
     }
 }
