@@ -208,7 +208,7 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
-                <ColumnDefinition></ColumnDefinition>                
+                <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
 
             <StackPanel Grid.Column="0">                
@@ -376,28 +376,41 @@
                 <TextBlock Text="Observaciones" Style="{StaticResource titulo}"></TextBlock>
                 <TextBox Style="{DynamicResource inputControl}"
                          FontSize="15"
-                         x:Name="observaciones"></TextBox>
-                <!--<TextBlock Text="" Style="{StaticResource titulo}"></TextBlock>
-                <TextBlock x:Name="" Style="{StaticResource subtitulo}"></TextBlock>-->
-                <!--#endregion-->
-                
-                <!--#region Asignaciones -->
-                <Label Content="Información del Departamento" 
+                         x:Name="observaciones"></TextBox>                
+                <!--#endregion-->               
+               
+                <!--#region Vivienda-->
+                <Label Content="Información de la Vivienda" 
                        FontWeight="Bold" 
                        FontSize="15" 
                        HorizontalAlignment="Center">
                 </Label>
-                
-                <TextBlock Text="Cupos Asignados" Style="{StaticResource titulo}"></TextBlock>
-                <TextBlock x:Name="cuposAsignados" Style="{StaticResource subtitulo}"></TextBlock>
 
-                <TextBlock Text="Cupos Restantes" Style="{StaticResource titulo}"></TextBlock>
-                <TextBlock x:Name="cuposRestantes" Style="{StaticResource subtitulo}"></TextBlock>
+                <TextBlock Text="Estado" Style="{StaticResource titulo}"></TextBlock>
+                <ComboBox x:Name="estado" 
+                          Style="{DynamicResource ComboBoxControl}"                               
+                          ItemsSource="{Binding Estado}" FontSize="15" 
+                          DropDownClosed="Estado_DropDownClosed">
+                </ComboBox>
 
-                <TextBlock Text="Tipo de Cupo" Style="{StaticResource titulo}"></TextBlock>
-                <TextBlock x:Name="tipoCupo" Style="{StaticResource subtitulo}"></TextBlock>
+                <TextBlock Text="Municipio" Style="{StaticResource titulo}"></TextBlock>
+                <ComboBox x:Name="municipio" 
+                          Style="{DynamicResource ComboBoxControl}"                               
+                          FontSize="15"
+                          DropDownClosed="Municipio_DropDownClosed">
+                </ComboBox>
+
+                <TextBlock Text="Parroquia" Style="{StaticResource titulo}"></TextBlock>
+                <ComboBox x:Name="parroquia" 
+                          Style="{DynamicResource ComboBoxControl}"                               
+                          FontSize="15"
+                          DropDownClosed="Parroquia_DropDownClosed">
+                </ComboBox>
+                <TextBlock Text="COD Parroquia" Style="{StaticResource titulo}"></TextBlock>
+                <TextBlock x:Name="codParroquia" Style="{StaticResource subtitulo}"></TextBlock>
+
                 <!--#endregion-->
-                
+
             </StackPanel>
 
             <StackPanel Grid.Column="2" Margin="20,0,0,0">
@@ -435,17 +448,8 @@
                 <TextBlock Text="Tasa: " Style="{StaticResource titulo}"></TextBlock>
                 <TextBlock x:Name="tasa" Style="{StaticResource subtitulo}"></TextBlock>
 
-                <TextBlock Text="Distribución Mensual: " Style="{StaticResource titulo}"></TextBlock>
-                <TextBlock x:Name="distMensual" Style="{StaticResource subtitulo}"></TextBlock>
-
-                <TextBlock Text="Distribución Anual: " Style="{StaticResource titulo}"></TextBlock>
-                <TextBlock x:Name="distAnual" Style="{StaticResource subtitulo}"></TextBlock>
-
-                <TextBlock Text="Máximo Mensual: " Style="{StaticResource titulo}"></TextBlock>
-                <TextBlock x:Name="maxMensual" Style="{StaticResource subtitulo}"></TextBlock>
-
-                <TextBlock Text="Máximo Anual: " Style="{StaticResource titulo}"></TextBlock>
-                <TextBlock x:Name="maxAnual" Style="{StaticResource subtitulo}"></TextBlock>
+                <TextBlock Text="Distribución: " Style="{StaticResource titulo}"></TextBlock>
+                <TextBlock x:Name="distribucion" Style="{StaticResource subtitulo}"></TextBlock>
 
                 <TextBlock Text="Cuota Mensual: " Style="{StaticResource titulo}"></TextBlock>
                 <TextBlock x:Name="cuotaMensual" Style="{StaticResource subtitulo}"></TextBlock>
@@ -455,6 +459,20 @@
 
                 <TextBlock Text="Monto Aprobado: " Style="{StaticResource titulo}"></TextBlock>
                 <TextBlock x:Name="maxTotal" Style="{StaticResource subtitulo}"></TextBlock>
+                <!--#endregion-->
+
+                <!--#region Asignaciones -->
+                
+                <TextBlock Text="Tipo de Cupo" Style="{StaticResource titulo}"></TextBlock>
+                <TextBlock x:Name="tipoCupo" Style="{StaticResource subtitulo}"></TextBlock>
+
+                <TextBlock Text="Cupos Asignados" Style="{StaticResource titulo}"></TextBlock>
+                <TextBlock x:Name="cuposAsignados" Style="{StaticResource subtitulo}"></TextBlock>
+
+                <TextBlock Text="Cupos Restantes" Style="{StaticResource titulo}"></TextBlock>
+                <TextBlock x:Name="cuposRestantes" Style="{StaticResource subtitulo}"></TextBlock>
+
+                
                 <!--#endregion-->
 
                 <Button Style="{StaticResource buttonForm}" x:Name="archivar"

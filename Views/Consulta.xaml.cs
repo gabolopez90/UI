@@ -33,6 +33,8 @@ namespace UI.Views
         List<DepartamentosModel> encargados;
         List<AsignacionesModel> asignaciones;
         List<EvaluadosModel> evaluados;
+        List<MunicipiosModel> municipios;
+        List<ParroquiasModel> parroquias;
         double monto_max, cuota_mensual, cuota_anual, tasaAnual, cuposDiferencia, cuposUsados;
         int nroCuotasMensual, nroCuotasAnual;
         string cedu, ceduCo;
@@ -124,8 +126,8 @@ namespace UI.Views
                 departamento.Text = clientes[0].departamento;                
                 fechaIngCliente.Text = clientes[0].fechadeingreso;                
                 tasa.Text = clientes[0].tasa.ToString();
-                distMensual.Text = clientes[0].distribucion_mensual.ToString();
-                distAnual.Text = clientes[0].distribucion_anual.ToString();
+                distribucion.Text = "Mensual: " + clientes[0].distribucion_mensual.ToString() + " / Anual: " + clientes[0].distribucion_anual.ToString();
+                
                
                 monto_max = Double.Parse(clientes[0].maximo_total.ToString());
 
@@ -170,8 +172,7 @@ namespace UI.Views
                         {
                             cuposUsados = evaluados.Count(item => int.Parse(item.fecha.Substring(3, 2)) == System.DateTime.Now.Month);
                         }
-                    }
-                    MessageBox.Show(cuposUsados.ToString());
+                    }                    
                     cuposDiferencia = asignaciones[0].asignacion - cuposUsados;
                     cuposAsignados.Text = asignaciones[0].asignacion.ToString();
                     cuposRestantes.Text = cuposDiferencia.ToString();
@@ -196,6 +197,32 @@ namespace UI.Views
             };// cedula no valida
             
         }
+
+        private void Estado_DropDownClosed(object sender, EventArgs e)
+        {
+            municipio.Items.Clear();
+            municipios = SQLiteDataAccess.BuscaMunicipio(estado.Text);
+            foreach (var item in municipios.Select(i => i.municipio).Distinct())
+            {
+                municipio.Items.Add(item);
+            }
+        }
+
+        private void Municipio_DropDownClosed(object sender, EventArgs e)
+        {
+            parroquia.Items.Clear();
+            parroquias = SQLiteDataAccess.BuscaParroquia(municipio.Text);
+            foreach (var item in parroquias)
+            {
+                parroquia.Items.Add(item.parroquia);
+            }
+        }
+
+        private void Parroquia_DropDownClosed(object sender, EventArgs e)
+        {
+            codParroquia.Text = parroquias.Find(item => item.parroquia.ToString() == parroquia.Text).cod.ToString();            
+        }
+
         private void Calcular_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -212,9 +239,7 @@ namespace UI.Views
 
                 cuota_mensual = PMT(clientes[0].tasa, nroCuotasMensual, montoMensual);
                 cuota_anual = PMT(tasaAnual, nroCuotasAnual, montoAnual);
-
-                maxMensual.Text = "$" + montoMensual.ToString();
-                maxAnual.Text = "$" + montoAnual.ToString();
+                
                 cuotaMensual.Text = "$" + cuota_mensual.ToString("N2");
                 cuotaAnual.Text = "$" + cuota_anual.ToString("N2");                
 
@@ -254,20 +279,26 @@ namespace UI.Views
                 string CALIFICA = detalle.Text;
                 string CALIFICA_COSOLICITANTE = detalleCosolicitante.Text;
                 string MONTO_SOLICITADO = montoSol.Text;
-                string TASA = tasa.Text;
-                string DIST_MENSUAL = distMensual.Text;
-                string DIST_ANUAL = distAnual.Text;
+                string TASA = tasa.Text;                
+                string DIST_MENSUAL = clientes[0].distribucion_mensual.ToString();
+                string DIST_ANUAL = clientes[0].distribucion_anual.ToString();
                 string CUOTA_MENSUAL = cuotaMensual.Text;
                 string CUOTA_ANUAL = cuotaAnual.Text;
                 string MONTO_APROBADO = maxTotal.Text;
                 string ESPECIALISTA = System.Security.Principal.WindowsIdentity.GetCurrent().Name.Substring(9).ToUpper();
                 string OBSERVACIONES = observaciones.Text;
+                string ESTATUS = "201";
+                string ULTIMA_MODIFICACION = System.DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss");
+                string ESTADO = estado.Text;
+                string MUNICIPIO = municipio.Text;
+                string PARROQUIA = parroquia.Text;
+                string COD_PARROQUIA = codParroquia.Text;
 
 
                 SQLiteArchivar.Archivado(FECHA, CEDULA, NOMBRE, CARGO, NIVEL, DEPARTAMENTO, REPORTE_DIRECTO, 
                     FECHA_INGRESO, R1, R2, R3, R4, MODALIDAD_CREDITO, CI_COSOLICITANTE, INGRESOS_COSOLICITANTE, 
                     CARGAS_COSOLICITANTE, CALIFICA, CALIFICA_COSOLICITANTE, MONTO_SOLICITADO, TASA, DIST_MENSUAL, DIST_ANUAL,
-                    CUOTA_MENSUAL, CUOTA_ANUAL, MONTO_APROBADO, ESPECIALISTA, OBSERVACIONES);
+                    CUOTA_MENSUAL, CUOTA_ANUAL, MONTO_APROBADO, ESPECIALISTA, OBSERVACIONES, ESTATUS, ULTIMA_MODIFICACION, ESTADO, MUNICIPIO, PARROQUIA, COD_PARROQUIA);
 
                 MessageBox.Show("REGISTRO ARCHIVADO EXITOSAMENTE");
 

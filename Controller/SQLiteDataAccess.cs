@@ -61,12 +61,19 @@ namespace UI.Models
             return output.ToList();
         }
 
-        //public static int Cupos(string departamento)
-        //{
-        //    using IDbConnection cnn = new SQLiteConnection(LoadConnectionString());
-        //    var output = cnn.Query<int>("Select Count(DEPARTAMENTO) from ARCHIVO_HIPOTECARIO where DEPARTAMENTO = '" + departamento + "'", new DynamicParameters()).Single();
-        //    return output;
-        //}
+        public static List<MunicipiosModel> BuscaMunicipio(string estado)
+        {
+            using IDbConnection cnn = new SQLiteConnection(LoadConnectionString());
+            var output = cnn.Query<MunicipiosModel>("Select * from ESTADOS where ESTADO = '" + estado + "'", new DynamicParameters());
+            return output.ToList();
+        }
+
+        public static List<ParroquiasModel> BuscaParroquia(string municipio)
+        {
+            using IDbConnection cnn = new SQLiteConnection(LoadConnectionString());
+            var output = cnn.Query<ParroquiasModel>("Select * from ESTADOS where MUNICIPIO = '" + municipio + "'", new DynamicParameters());
+            return output.ToList();
+        }
 
         private static string LoadConnectionString(string id = "Default")
         {
